@@ -1,19 +1,18 @@
 import { cart, getCartQuantity } from "./cart.js";
 import { products } from "../data/products.js";
+import { moneyConvert } from "./utils/utilis-money.js";
 
 const orderSummary = document.querySelector(".js-order-summary");
 
 let cartItemsHTML = "";
 
-cart.forEach((cartItem, index) => {
+cart.forEach((cartItem) => {
   let matchingProduct;
   products.forEach((product) => {
     if (cartItem.productId === product.id) {
       matchingProduct = product;
     }
   });
-
-  const price = `$${(matchingProduct.priceCents / 100).toFixed(2)}`;
 
   cartItemsHTML += `
     <div class="cart-item-container">
@@ -27,7 +26,7 @@ cart.forEach((cartItem, index) => {
 
         <div class="cart-item-details">
           <div class="product-name">${matchingProduct.name}</div>
-          <div class="product-price">${price}</div>
+          <div class="product-price">${moneyConvert(matchingProduct.priceCents)}</div>
           <div class="product-quantity">
             <span> Quantity: <span class="quantity-label">${cartItem.quantity}</span> </span>
             <span class="update-quantity-link link-primary">
@@ -48,7 +47,7 @@ cart.forEach((cartItem, index) => {
               type="radio"
               checked
               class="delivery-option-input"
-              name="delivery-option-${index}"
+              name="delivery-option-${matchingProduct.id}"
             />
             <div>
               <div class="delivery-option-date">Tuesday, June 21</div>
@@ -59,7 +58,7 @@ cart.forEach((cartItem, index) => {
             <input
               type="radio"
               class="delivery-option-input"
-              name="delivery-option-${index}"
+              name="delivery-option-${matchingProduct.id}"
             />
             <div>
               <div class="delivery-option-date">Wednesday, June 15</div>
@@ -70,7 +69,7 @@ cart.forEach((cartItem, index) => {
             <input
               type="radio"
               class="delivery-option-input"
-              name="delivery-option-${index}"
+              name="delivery-option-${matchingProduct.id}"
             />
             <div>
               <div class="delivery-option-date">Monday, June 13</div>
