@@ -58,3 +58,5 @@ document.querySelectorAll(".js-cart").forEach((cartButton) => {
     quantitycard();
   });
 });
+
+quantitycard();
