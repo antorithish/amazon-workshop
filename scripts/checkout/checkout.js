@@ -4,30 +4,22 @@ import {
   removeFromCart,
   UpdateFromCart,
   optionID,
+  option_matching,
   UpdateDeliveryOption,
 } from "../cart.js";
-import { products } from "../../data/products.js";
+import { product_id } from "../../data/products.js";
 import { moneyConvert } from "../utils/utilis-money.js";
 import { data_conversation } from "../utils/utilis-data-conversation.js";
+import {paymentSummary } from "./payment.js";
 
 export function ordersummary(){
     const orderSummary = document.querySelector(".js-order-summary");
     let cartItemsHTML = "";
     cart.forEach((cartItem) => {
-      let matchingProduct;
-      products.forEach((product) => {
-        if (cartItem.productId === product.id) {
-          matchingProduct = product;
-        }
-      });
+      const matchingProduct = product_id(cartItem.productId);
 
       function cart_cart(cartItem) {
-        let matching;
-        optionID.forEach((proId) => {
-          if (proId.id === cartItem.id) {
-            matching = proId;
-          }
-        });
+        const matching = option_matching(cartItem.id);
         const { for_less } = data_conversation(
           cartItem.id,
           matching.days,
@@ -153,6 +145,7 @@ export function ordersummary(){
         const {productId,deliveryId} = element.dataset;
         UpdateDeliveryOption(productId,Number(deliveryId));
         ordersummary();
+        paymentSummary();
       });
  
     });

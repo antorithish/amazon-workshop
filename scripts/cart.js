@@ -1,5 +1,14 @@
 
 export let cart = JSON.parse(localStorage.getItem("cart"));
+export function option_matching(id){
+  let matching;
+  optionID.forEach((proId) => {
+    if (proId.id === id) {
+      matching = proId;
+    }
+  });
+  return matching;
+}
 
 if (!cart){
   cart = [
