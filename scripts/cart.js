@@ -92,6 +92,7 @@ export function UpdateFromCart(productId){
 
 }
 
+//this function for updating optionid in the cart//
 export function UpdateDeliveryOption(productId, optionId) {
   let matchingProduct;
   cart.forEach((cartItem) => {
