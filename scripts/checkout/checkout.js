@@ -83,6 +83,7 @@ export function ordersummary(){
           `.JS-removed-container-${productId}`,
         );
         removedContainer.remove();
+        paymentSummary();
         updateCheckoutQuantity();
       });
     });
@@ -101,6 +102,7 @@ export function ordersummary(){
         });
         const updatedLabel = document.querySelector(`.change-value-${productId}`);
         updatedLabel.innerHTML = newQuantity;
+        paymentSummary();
         updateCheckoutQuantity();
       });
     });
