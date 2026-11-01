@@ -4,6 +4,7 @@ import {
   removeFromCart,
   UpdateFromCart,
   optionID,
+  UpdateDeliveryOption,
 } from "./cart.js";
 import { products } from "../data/products.js";
 import { moneyConvert } from "./utils/utilis-money.js";
@@ -124,7 +125,7 @@ function cart_Details(id, matchingProduct) {
     );
 
     checkoutHtml += `
-      <div class="delivery-option">
+      <div class="delivery-option js-delivery-option" data-product-id = "${matchingProduct.id}" data-delivery-id = "${date.id}">
         <input
           type="radio"
           ${checked} 
@@ -144,3 +145,12 @@ function cart_Details(id, matchingProduct) {
 function checking_id(id, orderId) {
   return id == orderId ? "checked" : "";
 }
+
+
+document.querySelectorAll(".js-delivery-option")
+.forEach((element)=>{
+  element.addEventListener("click",()=>{
+    const {productId,deliveryId} = element.dataset;
+    UpdateDeliveryOption(productId,Number(deliveryId));
+  });
+});
