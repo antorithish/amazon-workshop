@@ -1,7 +1,13 @@
-import { cart, getCartQuantity, removeFromCart,UpdateFromCart,optionID } from "./cart.js";
-import { products} from "../data/products.js";
+import {
+  cart,
+  getCartQuantity,
+  removeFromCart,
+  UpdateFromCart,
+  optionID,
+} from "./cart.js";
+import { products } from "../data/products.js";
 import { moneyConvert } from "./utils/utilis-money.js";
-import {data_conversation} from "./utils/utilis-data-conversation.js"
+import { data_conversation } from "./utils/utilis-data-conversation.js";
 const orderSummary = document.querySelector(".js-order-summary");
 
 let cartItemsHTML = "";
@@ -14,9 +20,24 @@ cart.forEach((cartItem) => {
     }
   });
 
+  function cart_cart(cartItem) {
+    let matching;
+    optionID.forEach((proId) => {
+      if (proId.id === cartItem.id) {
+        matching = proId;
+      }
+    });
+    const { for_less } = data_conversation(
+      cartItem.id,
+      matching.days,
+      matching.price,
+    );
+    return for_less;
+  }
+
   cartItemsHTML += `
     <div class="cart-item-container JS-removed-container-${cartItem.productId}">
-      <div class="delivery-date">Delivery date: Tuesday, June 21</div>
+      <div class="delivery-date">Delivery date: ${cart_cart(cartItem)}</div>
 
       <div class="cart-item-details-grid">
         <img
@@ -42,7 +63,7 @@ cart.forEach((cartItem) => {
           <div class="delivery-options-title">
             Choose a delivery option:
           </div>       
-           ${cart_Details(cartItem.id,matchingProduct)}
+           ${cart_Details(cartItem.id, matchingProduct)}
 
                     
         </div>
@@ -66,7 +87,7 @@ deleteLinks.forEach((deleteLink) => {
     const productId = deleteLink.dataset.removeItem;
     removeFromCart(productId);
     const removedContainer = document.querySelector(
-      `.JS-removed-container-${productId}`
+      `.JS-removed-container-${productId}`,
     );
     removedContainer.remove();
     updateCheckoutQuantity();
@@ -91,16 +112,18 @@ updateLinks.forEach((updateLink) => {
   });
 });
 
-
-
 function cart_Details(id, matchingProduct) {
-  let checkoutHtml = ""; 
-  
-  optionID.forEach((date) => { 
-      const checked = checking_id(id, date.id); 
-      const { for_less, function_price } = data_conversation(date.id, date.days, date.price);
-      
-      checkoutHtml += `
+  let checkoutHtml = "";
+
+  optionID.forEach((date) => {
+    const checked = checking_id(id, date.id);
+    const { for_less, function_price } = data_conversation(
+      date.id,
+      date.days,
+      date.price,
+    );
+
+    checkoutHtml += `
       <div class="delivery-option">
         <input
           type="radio"
@@ -116,10 +139,8 @@ function cart_Details(id, matchingProduct) {
       `;
   });
   return checkoutHtml;
-  
-  
 }
 
 function checking_id(id, orderId) {
-  return id == orderId ? "checked" : ""; 
+  return id == orderId ? "checked" : "";
 }
