@@ -1,4 +1,4 @@
-import { moneyConvert } from "../scripts/utils/utilis-money.js";
+import { moneyConvert } from "../../scripts/utils/utilis-money.js";
 
 describe("moneyConvert", () => {
   it("converts 0 cents", () => {

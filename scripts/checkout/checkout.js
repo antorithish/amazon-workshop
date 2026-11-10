@@ -29,7 +29,7 @@ export function ordersummary(){
       }
 
       cartItemsHTML += `
-        <div class="cart-item-container JS-removed-container-${cartItem.productId}">
+        <div class="cart-item-container JS-removed-container-${cartItem.productId} js-cart-item-container">
           <div class="delivery-date">Delivery date: ${cart_cart(cartItem)}</div>
 
           <div class="cart-item-details-grid">
@@ -41,12 +41,13 @@ export function ordersummary(){
             <div class="cart-item-details">
               <div class="product-name">${matchingProduct.name}</div>
               <div class="product-price">${moneyConvert(matchingProduct.priceCents)}</div>
-              <div class="product-quantity">
+              <div class="product-quantity js-product-quantity-${matchingProduct.id}">
                 <span> Quantity: <span class="quantity-label change-value-${cartItem.productId}">${cartItem.quantity}</span> </span>
                 <span class="update-quantity-link link-primary js-update-checkout-quantity" data-update-item="${cartItem.productId}">
                   Update
                 </span>
-                <span class="delete-quantity-link link-primary js-for-delete" data-remove-item="${cartItem.productId}">
+                <span class="delete-quantity-link link-primary js-for-delete js-delete-link-${matchingProduct.id}"
+                 data-remove-item="${cartItem.productId}">
                   Delete
                 </span>
               </div>
