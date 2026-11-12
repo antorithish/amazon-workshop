@@ -1,4 +1,4 @@
-import { cart, addtocart, loadFromStorage } from "../../scripts/cart.js";
+import { cart } from "../../scripts/oops-cart.js";
 
 describe("the suite of add to cart:-", () => {
   it("the cart already exists", () => {
@@ -13,10 +13,10 @@ describe("the suite of add to cart:-", () => {
     });
     spyOn(localStorage, "setItem");
 
-    loadFromStorage();
+    cart.loadFromStorage();
 
-    expect(cart.length).toEqual(1);
-    expect(cart[0].quantity).toEqual(2);
+    expect(cart.cartItems.length).toEqual(1);
+    expect(cart.cartItems[0].quantity).toEqual(2);
   });
 
   it("new cart was added", () => {
@@ -25,12 +25,12 @@ describe("the suite of add to cart:-", () => {
     });
     spyOn(localStorage, "setItem");
 
-    loadFromStorage();
-    addtocart("e43638ce-6aa0-4b85-b27f-e1d07eb678c6");
+    cart.loadFromStorage();
+    cart.addtocart("e43638ce-6aa0-4b85-b27f-e1d07eb678c6");
 
-    expect(cart.length).toEqual(1);
-    expect(cart[0].productId).toEqual("e43638ce-6aa0-4b85-b27f-e1d07eb678c6");
-    expect(cart[0].quantity).toEqual(1);
+    expect(cart.cartItems.length).toEqual(1);
+    expect(cart.cartItems[0].productId).toEqual("e43638ce-6aa0-4b85-b27f-e1d07eb678c6");
+    expect(cart.cartItems[0].quantity).toEqual(1);
     expect(localStorage.setItem).toHaveBeenCalledTimes(1);
   }); 
 });

@@ -1,12 +1,4 @@
-import {
-  cart,
-  getCartQuantity,
-  removeFromCart,
-  UpdateFromCart,
-  optionID,
-  option_matching,
-  UpdateDeliveryOption,
-} from "../cart.js";
+import { cart } from "../oops-cart.js";
 import { product_id } from "../../data/products.js";
 import { moneyConvert } from "../utils/utilis-money.js";
 import { data_conversation } from "../utils/utilis-data-conversation.js";
@@ -15,11 +7,11 @@ import {paymentSummary } from "./payment.js";
 export function ordersummary(){
     const orderSummary = document.querySelector(".js-order-summary");
     let cartItemsHTML = "";
-    cart.forEach((cartItem) => {
+    cart.cartItems.forEach((cartItem) => {
       const matchingProduct = product_id(cartItem.productId);
 
       function cart_cart(cartItem) {
-        const matching = option_matching(cartItem.id);
+        const matching = cart.option_matching(cartItem.id);
         const { for_less } = data_conversation(
           cartItem.id,
           matching.days,
@@ -70,7 +62,7 @@ export function ordersummary(){
 
     function updateCheckoutQuantity() {
       document.querySelector(".js-checkout-quantity").innerHTML =
-        `${getCartQuantity()} items`;
+        `${cart.getCartQuantity()} items`;
     }
     updateCheckoutQuantity();
 
@@ -79,7 +71,7 @@ export function ordersummary(){
     deleteLinks.forEach((deleteLink) => {
       deleteLink.addEventListener("click", () => {
         const productId = deleteLink.dataset.removeItem;
-        removeFromCart(productId);
+        cart.removeFromCart(productId);
         const removedContainer = document.querySelector(
           `.JS-removed-container-${productId}`,
         );
@@ -94,9 +86,9 @@ export function ordersummary(){
     updateLinks.forEach((updateLink) => {
       updateLink.addEventListener("click", () => {
         const productId = updateLink.dataset.updateItem;
-        UpdateFromCart(productId);
+        cart.UpdateFromCart(productId);
         let newQuantity;
-        cart.forEach((item) => {
+        cart.cartItems.forEach((item) => {
           if (item.productId === productId) {
             newQuantity = item.quantity;
           }
@@ -111,7 +103,7 @@ export function ordersummary(){
     function cart_Details(id, matchingProduct) {
       let checkoutHtml = "";
 
-      optionID.forEach((date) => {
+      cart.optionID.forEach((date) => {
         const checked = checking_id(id, date.id);
         const { for_less, function_price } = data_conversation(
           date.id,
@@ -146,7 +138,7 @@ export function ordersummary(){
     .forEach((element)=>{
       element.addEventListener("click",()=>{
         const {productId,deliveryId} = element.dataset;
-        UpdateDeliveryOption(productId,Number(deliveryId));
+        cart.UpdateDeliveryOption(productId,Number(deliveryId));
         ordersummary();
         paymentSummary();
       });

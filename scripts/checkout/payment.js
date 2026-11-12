@@ -1,15 +1,15 @@
-import { cart, option_matching } from "../cart.js";
+import { cart } from "../oops-cart.js";
 import { product_id } from "../../data/products.js";
 import { moneyConvert } from "../utils/utilis-money.js";
 
 export function paymentSummary() {
   let subtotalCents = 0;
   let shippingCents = 0;
-  cart.forEach((cartItem) => {
+  cart.cartItems.forEach((cartItem) => {
     const matchingProduct = product_id(cartItem.productId);
     if (!matchingProduct.priceCents) return;
     subtotalCents += matchingProduct.priceCents * cartItem.quantity;
-    const matchingOption = option_matching(cartItem.id);
+    const matchingOption = cart.option_matching(cartItem.id);
     if (matchingOption) {
       shippingCents += matchingOption.price;
     }

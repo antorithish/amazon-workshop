@@ -1,4 +1,4 @@
-import { cart, addtocart, quantitycard } from "./cart.js";
+import { cart } from "./oops-cart.js";
 import { products } from "../data/products.js";
 
 const productsGrid = document.querySelector(".js-products-grid");
@@ -54,9 +54,9 @@ productsGrid.innerHTML = productsHTML;
 document.querySelectorAll(".js-cart").forEach((cartButton) => {
   cartButton.addEventListener("click", () => {
     const productName = cartButton.dataset.productId;
-    addtocart(productName);
-    quantitycard();
+    cart.addtocart(productName);
+    cart.quantitycard();
   });
 });
 
-quantitycard();
+cart.quantitycard();
